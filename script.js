@@ -41,7 +41,7 @@ document.getElementById("logout-btn").addEventListener("click", () => {
   document.getElementById("app").style.display = "none";
 });
 
-// ฟังก์ชันบันทึกการจอง
+// Function to save bookings
 function saveBooking(room, date, time, description = "") {
   const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
@@ -160,7 +160,7 @@ function updateCalendar() {
   generateCalendar(year, month);
 }
 
-// ฟังก์ชันเพิ่มห้องประชุม
+// Function to add a room
 document.getElementById("add-room-btn").addEventListener("click", () => {
   const roomName = document.getElementById("new-room-name").value.trim();
   if (roomName) {
@@ -168,11 +168,11 @@ document.getElementById("add-room-btn").addEventListener("click", () => {
     rooms.push(roomName);
     localStorage.setItem("rooms", JSON.stringify(rooms));
     updateRoomOptions();
-    updateRoomList();  // อัปเดตแสดงรายการห้อง
+    updateRoomList();  // Update room list display
   }
 });
 
-// ฟังก์ชันแสดงรายการห้องประชุม
+// Function to show list of rooms
 function updateRoomList() {
   const roomList = document.getElementById("room-list");
   roomList.innerHTML = "";
@@ -193,16 +193,15 @@ function updateRoomList() {
   });
 }
 
-// ฟังก์ชันลบห้องประชุม
+// Function to delete a room
 function deleteRoom(index) {
   const rooms = JSON.parse(localStorage.getItem("rooms"));
   rooms.splice(index, 1);
   localStorage.setItem("rooms", JSON.stringify(rooms));
-  updateRoomList();
-  alert("Room deleted successfully!");
+  updateRoomList();  // Update room list after deletion
 }
 
-// ฟังก์ชันอัปเดตตัวเลือกห้อง
+// Function to update room options in the booking form
 function updateRoomOptions() {
   const roomSelect = document.getElementById("room");
   const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
