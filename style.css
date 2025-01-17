@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+button {
+  padding: 8px 16px;
+  margin: 10px;
+}
+
+input, select, textarea {
+  padding: 8px;
+  margin: 5px;
+  width: 200px;
+}
+
+#calendar-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.calendar-day {
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.booking {
+  color: red;
+  font-size: 12px;
+  display: block;
+}
+
+.description {
+  font-size: 10px;
+  color: gray;
+}
+
+.empty-day {
+  background-color: #f0f0f0;
+}
