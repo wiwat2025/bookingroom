@@ -177,40 +177,4 @@ function updateRoomList() {
   const roomList = document.getElementById("room-list");
   roomList.innerHTML = "";
 
-  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
-  rooms.forEach((room, index) => {
-    const li = document.createElement("li");
-    li.textContent = room;
-
-    if (currentUser.role === "admin") {
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.onclick = () => deleteRoom(index);
-      li.appendChild(deleteButton);
-    }
-
-    roomList.appendChild(li);
-  });
-}
-
-// Function to delete a room
-function deleteRoom(index) {
-  const rooms = JSON.parse(localStorage.getItem("rooms"));
-  rooms.splice(index, 1);
-  localStorage.setItem("rooms", JSON.stringify(rooms));
-  updateRoomList();  // Update room list after deletion
-}
-
-// Function to update room options in the booking form
-function updateRoomOptions() {
-  const roomSelect = document.getElementById("room");
-  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
-  roomSelect.innerHTML = "";
-
-  rooms.forEach((room) => {
-    const option = document.createElement("option");
-    option.value = room;
-    option.textContent = room;
-    roomSelect.appendChild(option);
-  });
-}
+  const rooms = JSON.parse
