@@ -30,6 +30,7 @@ function showApp() {
   document.getElementById("clear-bookings-container").style.display = currentUser.role === "admin" ? "block" : "none";
 
   updateRoomOptions();
+  updateRoomList();
   updateBookingList();
   updateCalendar();
 }
@@ -166,9 +167,40 @@ document.getElementById("add-room-btn").addEventListener("click", () => {
     const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
     rooms.push(roomName);
     localStorage.setItem("rooms", JSON.stringify(rooms));
-    updateRoomOptions();  // อัปเดตตัวเลือกห้อง
+    updateRoomOptions();
+    updateRoomList();  // อัปเดตแสดงรายการห้อง
   }
 });
+
+// ฟังก์ชันแสดงรายการห้องประชุม
+function updateRoomList() {
+  const roomList = document.getElementById("room-list");
+  roomList.innerHTML = "";
+
+  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+  rooms.forEach((room, index) => {
+    const li = document.createElement("li");
+    li.textContent = room;
+
+    if (currentUser.role === "admin") {
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.onclick = () => deleteRoom(index);
+      li.appendChild(deleteButton);
+    }
+
+    roomList.appendChild(li);
+  });
+}
+
+// ฟังก์ชันลบห้องประชุม
+function deleteRoom(index) {
+  const rooms = JSON.parse(localStorage.getItem("rooms"));
+  rooms.splice(index, 1);
+  localStorage.setItem("rooms", JSON.stringify(rooms));
+  updateRoomList();
+  alert("Room deleted successfully!");
+}
 
 // ฟังก์ชันอัปเดตตัวเลือกห้อง
 function updateRoomOptions() {
@@ -183,17 +215,3 @@ function updateRoomOptions() {
     roomSelect.appendChild(option);
   });
 }
-
-// ฟังก์ชันบันทึกการจองห้องประชุม
-document.querySelector("#booking-form form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const room = document.getElementById("room").value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
-  const description = document.getElementById("description").value;
-
-  saveBooking(room, date, time, description);
-  updateBookingList();
-  updateCalendar();
-  alert("Booking submitted successfully!");
-});
