@@ -1,48 +1,72 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
-h2 {
-  font-size: 24px;
+h2, h3 {
+  color: #333;
+}
+
+input, select, button, textarea {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
 }
 
 button {
-  padding: 8px 16px;
-  margin: 10px;
-}
-
-input, select, textarea {
-  padding: 8px;
-  margin: 5px;
-  width: 200px;
-}
-
-#calendar-container {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.calendar-day {
-  text-align: center;
-  border: 1px solid #ddd;
-  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
   cursor: pointer;
 }
 
+button:hover {
+  background-color: #45a049;
+}
+
+#calendar-container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.calendar-day {
+  width: 14%;
+  margin: 5px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
 .booking {
-  color: red;
-  font-size: 12px;
   display: block;
+  background-color: #ffcc00;
+  margin-top: 5px;
+  padding: 5px;
 }
 
 .description {
-  font-size: 10px;
-  color: gray;
+  display: block;
+  font-size: 0.8em;
+  color: #333;
 }
 
 .empty-day {
-  background-color: #f0f0f0;
+  width: 14%;
+}
+
+#add-room-form, #clear-bookings-container {
+  margin-top: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
 }
