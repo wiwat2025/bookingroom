@@ -128,26 +128,20 @@ function generateCalendar(year, month) {
   for (let day = 1; day <= daysInMonth; day++) {
     const dayDiv = document.createElement("div");
     dayDiv.classList.add("calendar-day");
-    dayDiv.innerHTML = `<strong>${day}</strong>`;
+    dayDiv.textContent = day;
 
     const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-    bookings.forEach((booking) => {
-      const [bookingYear, bookingMonth, bookingDay] = booking.date.split("-").map(Number);
+    const booking = bookings.find(
+      (b) => new Date(b.date).getDate() === day && new Date(b.date).getMonth() === month
+    );
 
-      if (bookingYear === year && bookingMonth === month + 1 && bookingDay === day) {
-        const bookingSpan = document.createElement("span");
-        bookingSpan.classList.add("booking");
-        bookingSpan.textContent = `${booking.room} - ${booking.time}`;
-        dayDiv.appendChild(bookingSpan);
-
-        if (booking.confirmed) {
-          const descriptionSpan = document.createElement("span");
-          descriptionSpan.classList.add("description");
-          descriptionSpan.textContent = `Confirmed: ${booking.description}`;
-          dayDiv.appendChild(descriptionSpan);
-        }
-      }
-    });
+    if (booking) {
+      const status = booking.confirmed ? "Confirmed" : "Pending";
+      const bookingInfo = document.createElement("div");
+      bookingInfo.classList.add("booking");
+      bookingInfo.textContent = `${booking.room} - ${status}`;
+      dayDiv.appendChild(bookingInfo);
+    }
 
     calendarContainer.appendChild(dayDiv);
   }
@@ -155,24 +149,20 @@ function generateCalendar(year, month) {
 
 function updateCalendar() {
   const today = new Date();
-  const month = today.getMonth();
-  const year = today.getFullYear();
-  generateCalendar(year, month);
+  generateCalendar(today.getFullYear(), today.getMonth());
 }
 
-// Function to add a room
 document.getElementById("add-room-btn").addEventListener("click", () => {
   const roomName = document.getElementById("new-room-name").value.trim();
   if (roomName) {
     const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
     rooms.push(roomName);
     localStorage.setItem("rooms", JSON.stringify(rooms));
-    updateRoomOptions();
-    updateRoomList();  // Update room list display
+    document.getElementById("new-room-name").value = "";
+    updateRoomList();
   }
 });
 
-// Function to show list of rooms
 function updateRoomList() {
   const roomList = document.getElementById("room-list");
   roomList.innerHTML = "";
@@ -215,4 +205,18 @@ function editRoom(index) {
     localStorage.setItem("rooms", JSON.stringify(rooms));
     updateRoomList();  // Update room list after editing
   }
+}
+
+// Update room options for booking
+function updateRoomOptions() {
+  const roomSelect = document.getElementById("room");
+  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+  roomSelect.innerHTML = "";
+
+  rooms.forEach((room) => {
+    const option = document.createElement("option");
+    option.value = room;
+    option.textContent = room;
+    roomSelect.appendChild(option);
+  });
 }
