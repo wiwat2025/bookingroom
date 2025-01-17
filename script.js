@@ -177,4 +177,42 @@ function updateRoomList() {
   const roomList = document.getElementById("room-list");
   roomList.innerHTML = "";
 
-  const rooms = JSON.parse
+  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+  rooms.forEach((room, index) => {
+    const li = document.createElement("li");
+    li.textContent = room;
+
+    if (currentUser.role === "admin") {
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.onclick = () => deleteRoom(index);
+      li.appendChild(deleteButton);
+
+      const editButton = document.createElement("button");
+      editButton.textContent = "Edit";
+      editButton.onclick = () => editRoom(index);
+      li.appendChild(editButton);
+    }
+
+    roomList.appendChild(li);
+  });
+}
+
+// Function to delete a room
+function deleteRoom(index) {
+  const rooms = JSON.parse(localStorage.getItem("rooms"));
+  rooms.splice(index, 1);
+  localStorage.setItem("rooms", JSON.stringify(rooms));
+  updateRoomList();  // Update room list after deletion
+}
+
+// Function to edit room
+function editRoom(index) {
+  const rooms = JSON.parse(localStorage.getItem("rooms"));
+  const newRoomName = prompt("Edit Room Name", rooms[index]);
+  if (newRoomName) {
+    rooms[index] = newRoomName;
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+    updateRoomList();  // Update room list after editing
+  }
+}
