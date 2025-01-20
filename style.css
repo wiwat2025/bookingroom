@@ -13,6 +13,7 @@ input, select, button, textarea {
   padding: 10px;
   margin: 10px 0;
   width: 100%;
+  box-sizing: border-box;
 }
 
 button {
@@ -27,46 +28,22 @@ button:hover {
 }
 
 #calendar-container {
-  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .calendar-day {
   width: 14%;
-  margin: 5px;
-  padding: 10px;
   background-color: #fff;
+  padding: 10px;
   border: 1px solid #ddd;
   text-align: center;
 }
 
 .booking {
-  display: block;
   background-color: #ffcc00;
-  margin-top: 5px;
   padding: 5px;
-}
-
-.description {
-  display: block;
-  font-size: 0.8em;
-  color: #333;
-}
-
-.empty-day {
-  width: 14%;
-}
-
-#add-room-form, #clear-bookings-container {
-  margin-top: 20px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
+  margin-top: 5px;
 }
