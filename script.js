@@ -1,11 +1,13 @@
+const users = [
+  { username: "admin", password: "admin123", role: "admin" },
+  { username: "user1", password: "user123", role: "user" },
+];
+
+let currentUser = null;
+
 document.getElementById("login-btn").addEventListener("click", () => {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-
-  if (!username || !password) {
-    alert("Please fill in both username and password.");
-    return;
-  }
 
   const user = users.find((u) => u.username === username && u.password === password);
 
@@ -19,49 +21,75 @@ document.getElementById("login-btn").addEventListener("click", () => {
   }
 });
 
-function saveBooking(room, date, time, description = "") {
-  if (!room || !date || !time) {
-    alert("Please fill in all booking details.");
-    return;
-  }
+function showApp() {
+  document.getElementById("login-form").style.display = "none";
+  document.getElementById("app").style.display = "block";
 
-  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+  document.getElementById("booking-form").style.display = currentUser.role === "user" ? "block" : "none";
+  document.getElementById("add-room-form").style.display = currentUser.role === "admin" ? "block" : "none";
+  document.getElementById("clear-bookings-container").style.display = currentUser.role === "admin" ? "block" : "none";
 
-  if (bookings.some((b) => b.room === room && b.date === date && b.time === time)) {
-    alert("This room is already booked for the selected time.");
-    return;
-  }
-
-  bookings.push({
-    room,
-    date,
-    time,
-    description: description || "No details",
-    confirmed: false,
-  });
-
-  localStorage.setItem("bookings", JSON.stringify(bookings));
+  updateRoomOptions();
+  updateRoomList();
   updateBookingList();
-  alert("Booking saved successfully!");
+  updateCalendar();
 }
+
+document.getElementById("logout-btn").addEventListener("click", () => {
+  currentUser = null;
+  document.getElementById("login-form").style.display = "block";
+  document.getElementById("app").style.display = "none";
+});
 
 document.getElementById("add-room-btn").addEventListener("click", () => {
   const roomName = document.getElementById("new-room-name").value.trim();
-
-  if (!roomName) {
-    alert("Room name cannot be empty.");
-    return;
+  if (roomName) {
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+    rooms.push(roomName);
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+    document.getElementById("new-room-name").value = "";
+    updateRoomList();
   }
+});
+
+function updateRoomList() {
+  const roomList = document.getElementById("room-list");
+  roomList.innerHTML = "";
 
   const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
-  if (rooms.includes(roomName)) {
-    alert("Room name already exists.");
-    return;
-  }
+  rooms.forEach((room) => {
+    const li = document.createElement("li");
+    li.textContent = room;
+    roomList.appendChild(li);
+  });
+}
 
-  rooms.push(roomName);
-  localStorage.setItem("rooms", JSON.stringify(rooms));
-  document.getElementById("new-room-name").value = "";
-  updateRoomList();
-  alert("Room added successfully!");
-});
+function updateRoomOptions() {
+  const roomSelect = document.getElementById("room");
+  const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+  roomSelect.innerHTML = "";
+
+  rooms.forEach((room) => {
+    const option = document.createElement("option");
+    option.value = room;
+    option.textContent = room;
+    roomSelect.appendChild(option);
+  });
+}
+
+function updateCalendar() {
+  const calendarContainer = document.getElementById("calendar-container");
+  calendarContainer.innerHTML = "";
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayDiv = document.createElement("div");
+    dayDiv.classList.add("calendar-day");
+    dayDiv.textContent = day;
+    calendarContainer.appendChild(dayDiv);
+  }
+}
