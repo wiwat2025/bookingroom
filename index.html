@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Room Booking System</title>
+  <title>Meeting Room Booking</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,30 +18,29 @@
     <h2>Welcome, <span id="user-name"></span></h2>
     <button id="logout-btn">Logout</button>
 
-    <div id="booking-form" style="display: none;">
+    <div id="booking-form">
       <h3>Book a Room</h3>
       <select id="room"></select>
-      <input type="date" id="booking-date">
-      <input type="time" id="booking-time">
-      <textarea id="booking-description" placeholder="Description (optional)"></textarea>
-      <button id="book-room-btn">Book Room</button>
+      <input type="date" id="date">
+      <input type="time" id="time">
+      <textarea id="description" placeholder="Description"></textarea>
+      <button id="book-btn">Book</button>
     </div>
 
-    <div id="add-room-form" style="display: none;">
-      <h3>Add Room</h3>
+    <div id="add-room-form">
+      <h3>Add a New Room</h3>
       <input type="text" id="new-room-name" placeholder="Room Name">
       <button id="add-room-btn">Add Room</button>
     </div>
 
-    <div id="clear-bookings-container" style="display: none;">
+    <div id="clear-bookings-container">
       <h3>All Bookings</h3>
       <ul id="list"></ul>
     </div>
 
-    <h3>Calendar</h3>
     <div id="calendar-container"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
