@@ -1,60 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Booking System</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Booking System</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="login-form">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button id="login-btn">Login</button>
+  <div id="login-form">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button id="login-btn">Login</button>
+  </div>
+
+  <div id="app" style="display: none;">
+    <h2>Welcome, <span id="user-name"></span></h2>
+    <button id="logout-btn">Logout</button>
+
+    <div id="booking-form" style="display: none;">
+      <h3>Book a Room</h3>
+      <select id="room"></select>
+      <input type="date" id="booking-date">
+      <input type="time" id="booking-time">
+      <textarea id="booking-description" placeholder="Description (optional)"></textarea>
+      <button id="book-room-btn">Book Room</button>
     </div>
 
-    <div id="app" style="display: none;">
-        <h2>Welcome <span id="user-name"></span></h2>
-        <button id="logout-btn">Logout</button>
-
-        <div id="calendar-container"></div>
-
-        <div id="add-room-form" style="display: none;">
-            <h3>Add a Room</h3>
-            <input type="text" id="new-room-name" placeholder="Room Name" required>
-            <button id="add-room-btn">Add Room</button>
-
-            <h3>Room List</h3>
-            <ul id="room-list"></ul>
-        </div>
-
-        <div id="booking-form" style="display: none;">
-            <h3>Book a Room</h3>
-            <form>
-                <label for="room">Room:</label>
-                <select id="room" required></select>
-
-                <label for="date">Date:</label>
-                <input type="date" id="date" required>
-
-                <label for="time">Time:</label>
-                <input type="time" id="time" required>
-
-                <label for="description">Description:</label>
-                <textarea id="description"></textarea>
-
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-
-        <ul id="list"></ul>
-
-        <div id="clear-bookings-container" style="display: none;">
-            <button id="clear-bookings-btn">Clear All Bookings</button>
-        </div>
+    <div id="add-room-form" style="display: none;">
+      <h3>Add Room</h3>
+      <input type="text" id="new-room-name" placeholder="Room Name">
+      <button id="add-room-btn">Add Room</button>
     </div>
 
-    <script src="script.js"></script>
+    <div id="clear-bookings-container" style="display: none;">
+      <h3>All Bookings</h3>
+      <ul id="list"></ul>
+    </div>
+
+    <h3>Calendar</h3>
+    <div id="calendar-container"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
